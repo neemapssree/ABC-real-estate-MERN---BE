@@ -23,7 +23,8 @@ connectDB();
 
 // Enable CORS (adjust origins as needed)
 app.use(cors({
-  origin: ['https://abc-real-estate-mern-fe.vercel.app/', 'http://localhost:3000']
+  origin: ['https://abc-real-estate-mern-fe.vercel.app', 'http://localhost:3000'],
+  credentials: true // if you plan to send cookies or auth headers
 }));
 
 // Logging and parsing
