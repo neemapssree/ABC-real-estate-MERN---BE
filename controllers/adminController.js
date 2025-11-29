@@ -4,20 +4,33 @@ const   PROP_SCHEDULES = require('./Models/propSchedules');
 const { response } = require('../app');
 const properties = require('./Models/propSchema');
 
+
 const addProperty = async (req,res) => {
-    try{
-        console.log(req.body, 'Hai....');
-        await PROPS({propname:req.query.propname,
-            state:req.query.state,
-            type:req.query.type,
-            propcount:req.query.propcount,
-            propaddress:req.query.propaddress,
-            propImg:req.file.filename}).save()
-            res.status(200).json('Property added successfully');
-        }catch (error) {
-            res.status(500).json(error);
-        }
-    };
+    try{         
+        console.log("Property data:", req.body);
+        console.log("Property file:", req.file);
+        const imageUrl = req.file?.path;
+
+        const newProperty = PROPS({
+            propname: req.body.propname,
+            state: req.body.state,
+            type: req.body.type,
+            propcount: req.body.propcount,
+            propaddress: req.body.propaddress,
+            propImg: imageUrl,
+        });
+
+        await newProperty.save();    
+        res.status(201).json({
+            success: true,
+            message: 'Property added successfully',
+            imageUrl,
+        });
+    } catch(error){
+        console.error(error);
+        res.status(500).json({success: false, message: 'Server error'});
+    }
+};
 
 const addTimeSlotData = async (req,res) => {
     try{

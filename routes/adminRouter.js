@@ -4,24 +4,28 @@ const { addProperty, addTimeSlotData, deleteTimeSlotData, updatePropData } = req
 
 const multer = require('multer');
 const { adminAuth } = require('../middlewares/authorization');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-const fileStorage = multer.diskStorage({
-    destination:(req,file,cb)=> {        
-        cb(null,'public/properties')
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'properties',
+        allowed_formats: ['jpg', 'jpeg', 'webp', 'png', 'svg'],
     },
-    filename:(req,file,cb)=>{
-        const originalname = file.originalname;
-        // Replace spaces with hyphens in the file name
-        const updatedfilename = originalname.replace(/\s+/g, '-');
-        cb(null,Date.now()+"-"+updatedfilename)        
-        // cb(null, file.originalname)
-    }
-})
+});
 
+const upload = multer({ storage });
 
-const upload = multer({storage:fileStorage});
 
 router.post('/addProperty',adminAuth,upload.single('image'), addProperty);      // before devaiting to addProeprty, will modify the image file using multer
+//router.post('/addProperty', upload.single('image'), addProperty);
 router.post('/addTimeSlotData',adminAuth,addTimeSlotData);
 router.post('/deleteTimeSlot',adminAuth,deleteTimeSlotData);
 router.post('/updatePropData',adminAuth, updatePropData);
