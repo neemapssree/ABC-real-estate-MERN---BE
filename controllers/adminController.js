@@ -3,6 +3,7 @@ const PROPS = require('./Models/propSchema');
 const   PROP_SCHEDULES = require('./Models/propSchedules');
 const { response } = require('../app');
 const properties = require('./Models/propSchema');
+const { now } = require('mongoose');
 
 
 const addProperty = async (req,res) => {
@@ -17,7 +18,7 @@ const addProperty = async (req,res) => {
             type: req.body.type,
             propcount: req.body.propcount,
             propaddress: req.body.propaddress,
-            propImg: imageUrl,
+            propImg: imageUrl,            
         });
 
         await newProperty.save();    

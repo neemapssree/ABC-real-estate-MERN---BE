@@ -24,12 +24,8 @@ const propSchema = new mongoose.Schema({
     propImg:{
         type:String,
         required:true
-    },
-    timestamp: {
-        type: Date,
-        default:new Date()
-    }      
-});
+    },  
+}, { timestamps: true });
 
 const properties = mongoose.model("properties", propSchema);
 module.exports = properties;

@@ -5,7 +5,7 @@ const {getMyBookingsData} = require('../controllers/userController');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/getAllProperties',userAuth,getAllProperties)
+router.get('/getAllProperties',getAllProperties)
 router.get('/single-prop',userAuth,getSinglePropData)
 router.get('/dayWiseTimeSlot',userAuth,dayWiseSlotFunction)
 router.get('/getMyBookingsData',userAuth,getMyBookingsData)

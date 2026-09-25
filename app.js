@@ -18,14 +18,21 @@ const stripeWebHook = require('./controllers/stripeWebhook');
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://abc-real-estate-mern-fe.vercel.app",
+];
+
 // Connect to MongoDB
 connectDB();
 
 // Enable CORS (adjust origins as needed)
-app.use(cors({
-  origin: ['https://abc-real-estate-mern-fe.vercel.app', 'http://localhost:3000'],
-  credentials: true // if you plan to send cookies or auth headers
-}));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 // Logging and parsing
 app.use(logger('dev'));
