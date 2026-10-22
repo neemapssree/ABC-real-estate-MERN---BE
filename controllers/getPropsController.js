@@ -13,6 +13,15 @@ const getAllProperties = (req,res) => {
     });
 }
 
+const getFeaturedProperties = (req,res) => {
+    PROPS.find({isFeatured:true}).then((response) => {        
+        res.status(200).json(response);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+}
+
 const getSinglePropData = async (req,res) => {
     try{
     const result = await PROPS.findOne({_id:req.query.propId})
@@ -68,7 +77,7 @@ const cancelBooking = async (req,res) => {
         console.log(req.body, "Request is:");
         const {bookings} = req.body;        
 
-        const deleteBooking = await PROP_SCHEDULES.deleteOne({
+        const deleteBooking = await SCHEDULES.deleteOne({
             _id: { $in : bookings},
         });
 
@@ -83,4 +92,4 @@ const cancelBooking = async (req,res) => {
     }
 };
 
-module.exports = {getAllProperties,getSinglePropData,dayWiseSlotFunction,cancelBooking}
+module.exports = {getAllProperties,getFeaturedProperties,getSinglePropData,dayWiseSlotFunction,cancelBooking}

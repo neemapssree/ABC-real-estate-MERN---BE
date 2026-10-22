@@ -14,9 +14,25 @@ const propSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    propcount:{
-        type:Number,
-        required:true
+    beds:{ 
+        type: [String],
+        required: true
+    },
+    baths: {
+        type: [String],
+        required: true
+    },
+    price: {
+        type: String,
+        required: true
+    },
+    area: {
+        type: String,
+        required: true
+    },
+    handover: {
+        type: String,
+        required: false
     },
     propaddress:{
         type:String,        
@@ -25,6 +41,14 @@ const propSchema = new mongoose.Schema({
         type:String,
         required:true
     },  
+    isFeatured:{
+        type:Boolean,
+        default:false
+    },
+    inStock: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true });
 
 const properties = mongoose.model("properties", propSchema);

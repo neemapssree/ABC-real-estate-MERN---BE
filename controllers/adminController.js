@@ -16,9 +16,14 @@ const addProperty = async (req,res) => {
             propname: req.body.propname,
             state: req.body.state,
             type: req.body.type,
-            propcount: req.body.propcount,
+            beds: req.body.beds,
+            baths: req.body.baths,
+            price: req.body.price,
+            area: req.body.area,
             propaddress: req.body.propaddress,
-            propImg: imageUrl,            
+            propImg: imageUrl, 
+            isFeatured: req.body.isFeatured || false, 
+            isStock: req.body.isStock || true,         
         });
 
         await newProperty.save();    
@@ -113,20 +118,35 @@ const deleteTimeSlotData = async (req,res) => {
     }
 };
 
-const updatePropData = (req,res) => {
+const updatePropData = async (req,res) => {
     try {
-        console.log(req.body, "update is:");
-        PROPS.updateOne({_id:req.body._id},
-            {$set:{propname:req.body.propname,
+        //console.log(req.body, "update is:");
+        const updateProperty = await PROPS.updateOne(
+            {_id:req.body._id},
+            {
+                $set:{propname:req.body.propname,
                 state:req.body.state,
                 type:req.body.type,
                 propcount:req.body.propcount,
-                propaddress:req.body.propaddress}}).then((response)=>{
-            res.status(200).json(response);
-        })
+                isFeatured:req.body.isFeatured,
+                propaddress:req.body.propaddress}
+            }
+        );
+        return res.status(200).json(
+            {
+                success : true,
+                message: "Property updated successfully",
+                data: updatePropData,
+            }
+        );
          
-    }catch (err){
-        console.log(err);
+    } catch (error) {
+        console.error("Update property error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
     }
 };
  

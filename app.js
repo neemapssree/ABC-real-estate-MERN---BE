@@ -16,6 +16,8 @@ const adminRouter = require('./routes/adminRouter');
 const paymentRouter = require('./routes/paymentRouter');
 const stripeWebHook = require('./controllers/stripeWebhook');
 
+const leadsRouter = require('./routes/leadsRouter');
+
 const app = express();
 
 const allowedOrigins = [
@@ -51,6 +53,7 @@ app.use('/user', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/payment', paymentRouter);
 app.use('/webhook', stripeWebHook);
+app.use('/api/leads', leadsRouter);
 
 // Catch 404 and forward to error handler (JSON)
 app.use((req, res, next) => {

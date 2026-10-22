@@ -1,11 +1,12 @@
 var express = require('express');
-const { getAllProperties, getSinglePropData, dayWiseSlotFunction, cancelBooking } = require('../controllers/getPropsController');
+const { getAllProperties, getFeaturedProperties, getSinglePropData, dayWiseSlotFunction, cancelBooking } = require('../controllers/getPropsController');
 const { userAuth } = require('../middlewares/authorization');
 const {getMyBookingsData} = require('../controllers/userController');
 var router = express.Router();
 
 /* GET users listing. */
 router.get('/getAllProperties',getAllProperties)
+router.get('/getFeaturedProperties',getFeaturedProperties)
 router.get('/single-prop',userAuth,getSinglePropData)
 router.get('/dayWiseTimeSlot',userAuth,dayWiseSlotFunction)
 router.get('/getMyBookingsData',userAuth,getMyBookingsData)
